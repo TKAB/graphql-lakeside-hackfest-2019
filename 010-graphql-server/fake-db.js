@@ -21,6 +21,9 @@ const magazines = [
 
 exports.fakedb = {
 
+    /**
+     * @param {number} first - number of books
+     */
     getBooks: (first, titleContains) => {
         let result = books;
 
