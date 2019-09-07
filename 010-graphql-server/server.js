@@ -20,6 +20,7 @@ const typeDefs = gql`
     id: Int!
     firstName: String
     lastName: String
+    books: [Book]
   }
 `;
 
@@ -39,8 +40,12 @@ const resolvers = {
   Book: {
     // This method would override the default resolver for book.title
     // title: (book) => book.title + ` resolved`,
-    
-    author: (book) => db.getAuthorById(book.authorId)
+
+    author: book => db.getAuthorById(book.authorId),
+  },
+
+  Author: {
+    books: author => db.getBooksByAuthorId(author.id),
   },
 };
 
