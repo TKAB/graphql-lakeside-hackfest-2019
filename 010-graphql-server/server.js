@@ -1,14 +1,24 @@
 const { ApolloServer, gql } = require('apollo-server');
+const { fakedb: db } = require('./fake-db');
 
 const typeDefs = gql`
   type Query {
     hello: String
-    book: [Book]
+    books: [Book]
+    book(id: Int!): Book
+    authors: [Author]
+    author(id: Int!): Author
   }
 
   type Book {
     id: Int!
     title: String
+  }
+
+  type Author {
+    id: Int!
+    firstName: String
+    lastName: String
   }
 `;
 
@@ -16,17 +26,18 @@ const resolvers = {
   Query: {
     hello: () => 'world',
 
-    book: () => {
-      return {
-        id: 1,
-        title: 'The one and only book',
-      };
-    },
+    books: () => db.getBooks(),
+
+    book: (_, { id }) => db.getBookById(id),
+
+    authors: () => db.getAuthors(),
+
+    author: (_, { id }) => db.getAuthorById(id),
   },
 
   Book: {
-    // This method overrides the default resolver for book.title
-    title: (book) => book.title + ` resolved`,
+    // This method would override the default resolver for book.title
+    // title: (book) => book.title + ` resolved`,
   },
 };
 
