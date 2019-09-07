@@ -21,3 +21,13 @@ query {
   }
 }
 ```
+
+
+## Example 2
+
+Enabling the dataloader
+
+
+## Example 3
+
+- `npx graphql-codegen` to generate typings (?)
