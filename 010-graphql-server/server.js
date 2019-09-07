@@ -4,7 +4,7 @@ const { fakedb: db } = require('./fake-db');
 const typeDefs = gql`
   type Query {
     hello: String
-    books: [Book]
+    books(first: Int): [Book]
     book(id: Int!): Book
     authors: [Author]
     author(id: Int!): Author
@@ -22,13 +22,18 @@ const typeDefs = gql`
     lastName: String
     books: [Book]
   }
+
+  # Draft for a mutation
+  #type Mutation {
+  #  createAuthor(...)
+  #}
 `;
 
 const resolvers = {
   Query: {
     hello: () => 'world',
 
-    books: () => db.getBooks(),
+    books: (_, { first }) => db.getBooks(first),
 
     book: (_, { id }) => db.getBookById(id),
 
