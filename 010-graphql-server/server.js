@@ -13,6 +13,7 @@ const typeDefs = gql`
   type Book {
     id: Int!
     title: String
+    author: Author
   }
 
   type Author {
@@ -38,6 +39,8 @@ const resolvers = {
   Book: {
     // This method would override the default resolver for book.title
     // title: (book) => book.title + ` resolved`,
+    
+    author: (book) => db.getAuthorById(book.authorId)
   },
 };
 
